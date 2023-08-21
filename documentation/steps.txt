@@ -1,0 +1,4 @@
+modelagem de banco de dados -> mysql/mongodb -> banco de dados
+diagrama de classe -> ? -> endpoints
+prototipagem -> figma -> endpoints
+readme de deploy -> docker
