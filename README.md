@@ -1,2 +1,2 @@
-# system-food
-Application using Microservice about Food
+# foodify
+Designing and developing a Food application (Microservices, Java, Spring Boot, Spring Security, Spring Cloud, MySQL, Rest API, Web Client, Ionic and Angular Web/App) focused on delivering an online food ordering experience. The application contains an interface that communicates with a Spring Boot API, redirecting all user requests to designated microservices, integrating with PayPal for secure payment processing.
