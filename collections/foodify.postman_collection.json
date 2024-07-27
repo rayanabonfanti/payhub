@@ -1,0 +1,626 @@
+{
+	"info": {
+		"_postman_id": "1923ee72-56f7-486d-811f-8f57be02cef8",
+		"name": "foodify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36675341"
+	},
+	"item": [
+		{
+			"name": "user-customer",
+			"item": [
+				{
+					"name": "register-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Fulano User\",\n    \"email\": \"fulano-user@gmail.com\",\n    \"login\": \"fulano-user\",\n    \"password\": \"senha123\",\n    \"role\": \"USER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost-user-customer}}/foodify/v1/user-customer/register",
+							"host": [
+								"{{localhost-user-customer}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"user-customer",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Fulano Admin\",\n    \"email\": \"fulano-admin@gmail.com\",\n    \"login\": \"fulano-admin\",\n    \"password\": \"senha123\",\n    \"role\": \"ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost-user-customer}}/foodify/v1/user-customer/register",
+							"host": [
+								"{{localhost-user-customer}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"user-customer",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-login-user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost-user-customer}}/foodify/v1/user-customer/get-login?login=fulano-user",
+							"host": [
+								"{{localhost-user-customer}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"user-customer",
+								"get-login"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "fulano-user"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-login-admin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost-user-customer}}/foodify/v1/user-customer/get-login?login=fulano-admin",
+							"host": [
+								"{{localhost-user-customer}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"user-customer",
+								"get-login"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "fulano-admin"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "iam",
+			"item": [
+				{
+					"name": "login-user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"token_user\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"fulano-user\",\n    \"password\": \"senha123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost-iam}}/foodify/v1/authorization/login",
+							"host": [
+								"{{localhost-iam}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login-admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"token_admin\", jsonData.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"fulano-admin\",\n    \"password\": \"senha123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost-iam}}/foodify/v1/authorization/login",
+							"host": [
+								"{{localhost-iam}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"authorization",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orchestrator",
+			"item": [
+				{
+					"name": "test-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost-orchestrator}}/foodify/v1/test/user",
+							"host": [
+								"{{localhost-orchestrator}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"test",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test-admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost-orchestrator}}/foodify/v1/test/admin",
+							"host": [
+								"{{localhost-orchestrator}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"test",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Menu by Establishments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost-orchestrator}}/foodify/v1/orchestrator/menu-by-establishments",
+							"host": [
+								"{{localhost-orchestrator}}"
+							],
+							"path": [
+								"foodify",
+								"v1",
+								"orchestrator",
+								"menu-by-establishments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "establishment",
+			"item": [
+				{
+					"name": "Create Establishment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Pizza Place\",\n    \"address\": \"123 Main Street\",\n    \"menuItems\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/create-establishment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"create-establishment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Establishment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Pizza Place\",\n    \"address\": \"456 Elm Street\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/update-establishment?id=66a56e9ca2cd4112e85a40ee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"update-establishment"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "66a56e9ca2cd4112e85a40ee"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Establishment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/all-establishments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"all-establishments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Establishment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/one-establishment?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"one-establishment"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Establishment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/delete-establishment?id=66a56e9ca2cd4112e85a40ee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"delete-establishment"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "66a56e9ca2cd4112e85a40ee"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Menu in Establishment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Margherita Pizza\",\n    \"description\": \"Classic pizza with tomato and mozzarella\",\n    \"price\": 9.99,\n    \"establishmentId\": \"66a577c035093f54830b4acb\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/create-menu?id=66a577c035093f54830b4acb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"create-menu"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "66a577c035093f54830b4acb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Menu",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Margherita Pizza\",\n    \"description\": \"Classic pizza with tomato, mozzarella, and basil\",\n    \"price\": 10.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/update-menu?id=1&itemId=66a5743fa2cd4112e85a40f0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"update-menu"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "itemId",
+									"value": "66a5743fa2cd4112e85a40f0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Menu by Establishment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/all-menu?id=66a5741da2cd4112e85a40ef",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"all-menu"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "66a5741da2cd4112e85a40ef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Menu",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/foodify/v1/establishments-menu/delete-menu?id=66a5741da2cd4112e85a40ef&itemId=66a5743fa2cd4112e85a40f0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"foodify",
+								"v1",
+								"establishments-menu",
+								"delete-menu"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "66a5741da2cd4112e85a40ef"
+								},
+								{
+									"key": "itemId",
+									"value": "66a5743fa2cd4112e85a40f0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

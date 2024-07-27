@@ -2,6 +2,7 @@ package foodify.user.customer.services.implementations;
 
 import foodify.user.customer.domain.dto.RegisterUserCustomerDto;
 import foodify.user.customer.domain.orm.UserCustomer;
+import foodify.user.customer.exceptions.UserAlreadyExistsException;
 import foodify.user.customer.repositories.UserCustomerRepository;
 import foodify.user.customer.services.UserCustomerService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,10 @@ public class UserCustomerServiceImpl implements UserCustomerService {
 
     @Override
     public void registerUser(RegisterUserCustomerDto registerUserCustomerDto) {
+        if (userCustomerRepository.findByLoginAndEmail(registerUserCustomerDto.login(), registerUserCustomerDto.email()).isPresent()) {
+            throw new UserAlreadyExistsException("User customer already exists");
+        }
+
         UserCustomer newUser = new UserCustomer(
                 UUID.randomUUID().toString(),
                 registerUserCustomerDto.name(),
@@ -38,4 +43,5 @@ public class UserCustomerServiceImpl implements UserCustomerService {
     public UserCustomer getUserByLogin(String login) {
         return userCustomerRepository.findByLogin(login).orElse(null);
     }
+
 }

@@ -4,7 +4,6 @@ import foodify.user.customer.domain.dto.RegisterUserCustomerDto;
 import foodify.user.customer.domain.orm.UserCustomer;
 import foodify.user.customer.services.UserCustomerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,9 +23,8 @@ public class UserCustomerController {
     }
 
     @GetMapping("/get-login")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<UserCustomer> getLogin(@RequestParam String login) {
-        UserCustomer user = userCustomerService.getUserByLogin(login);
+            UserCustomer user = userCustomerService.getUserByLogin(login);
         return ResponseEntity.ok(user);
     }
 

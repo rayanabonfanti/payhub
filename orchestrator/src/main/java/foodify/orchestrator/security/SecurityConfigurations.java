@@ -3,6 +3,7 @@ package foodify.orchestrator.security;
 import foodify.orchestrator.utils.ConstantsUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfigurations {
 
     @Value("${api.security.token.secret}")
@@ -36,6 +38,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/foodify/v1/test/user").hasAuthority(ConstantsUtil.ROLE_USER)
                         .requestMatchers("/foodify/v1/test/admin").hasAuthority(ConstantsUtil.ROLE_ADMIN)
+                        .requestMatchers("/foodify/v1/orchestrator/menu-by-establishments").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new TokenFilter(secret), UsernamePasswordAuthenticationFilter.class)
