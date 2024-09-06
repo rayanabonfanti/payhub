@@ -9,6 +9,11 @@ import java.util.Collections;
 
 public record User(String id, String name, String email, String login, String password, UserRole role) implements UserDetails {
 
+//    public static User fromUserCustomerResponse(UserCustomerResponse response) {
+//        UserRole role = UserRole.valueOf(response.getRole().toUpperCase());
+//        return new User(response.getId(), response.getName(), response.getEmail(), response.getLogin(), response.getPassword(), role);
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role() == UserRole.ADMIN) {

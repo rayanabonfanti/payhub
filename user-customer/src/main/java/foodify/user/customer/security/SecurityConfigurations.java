@@ -36,8 +36,8 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(ConstantsUtil.REGISTER_USER).permitAll()
-                                .requestMatchers("/foodify/v1/user-customer/get-login").permitAll()
-//                        .requestMatchers("/foodify/v1/user-customer/get-login").hasAuthority(ConstantsUtil.ROLE_ADMIN)
+                        .requestMatchers( "/foodify/v1/user-customer/test-api-rest").permitAll()
+                        .requestMatchers("/foodify/v1/user-customer/get-login", "/foodify/v1/user-customer/test-auth-api-rest").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new TokenFilter(secret), UsernamePasswordAuthenticationFilter.class)
