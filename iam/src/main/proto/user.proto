@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package foodify.iam;
+
+option java_multiple_files = true;
+option java_package = "foodify.iam";
+
+service UserCustomerService {
+  rpc GetUserByLogin(GetUserByLoginRequest) returns (UserCustomerResponse);
+}
+
+message GetUserByLoginRequest {
+  string login = 1;
+}
+
+message UserCustomerResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string login = 4;
+  string password = 5;
+  string role = 6;
+}
